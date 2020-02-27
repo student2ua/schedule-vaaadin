@@ -2,14 +2,15 @@ package com.packagename.myapp.model;
 
 public class Faculty {
     private Integer id;
-    private String name;
+    private String facultyName;
+    private String shortName;
 
     public Faculty() {
     }
 
     public Faculty(int i, String s) {
         this.id = i;
-        this.name = s;
+        this.facultyName = s;
     }
 
     public Integer getId() {
@@ -20,11 +21,19 @@ public class Faculty {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFacultyName() {
+        return facultyName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFacultyName(String facultyName) {
+        this.facultyName = facultyName;
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 }

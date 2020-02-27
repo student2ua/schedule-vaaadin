@@ -4,22 +4,21 @@ import com.packagename.myapp.model.Faculty;
 import com.packagename.myapp.model.Speciality;
 import com.packagename.myapp.model.Student;
 import com.packagename.myapp.model.StudentGroups;
-import com.packagename.myapp.service.ScheduleService;
+import com.packagename.myapp.service.IScheduleService;
+import com.packagename.myapp.service.RestScheduleService;
 import com.vaadin.flow.component.ItemLabelGenerator;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.server.VaadinService;
-import com.vaadin.flow.server.VaadinServletRequest;
+import com.vaadin.flow.server.VaadinServlet;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
 
 public class GroupForm extends FormLayout {
     private MainView mainView = null;
-    private ScheduleService service = null;
+    private IScheduleService service = null;
     private Button buttonSubmit = new Button("Расписание");
 //    FormLayout layoutWithFormItems = new FormLayout();
 
@@ -31,11 +30,12 @@ public class GroupForm extends FormLayout {
 
     public GroupForm(MainView mainView) {
         this.mainView = mainView;
-        service = ScheduleService.getInstance();
+//        service = ScheduleService.getInstance();
+        service = new RestScheduleService();
 //        cbFaculty.setReadOnly(true);
         cbFaculty.setRequired(true);
         List<Faculty> listFaculty = service.getFaculties();
-        cbFaculty.setItemLabelGenerator(Faculty::getName);
+        cbFaculty.setItemLabelGenerator(Faculty::getFacultyName);
         cbFaculty.setItems(listFaculty);
         addFormItem(cbFaculty, "Факультет");
         cbFaculty.addValueChangeListener(valueChangeEvent -> {
@@ -51,7 +51,12 @@ public class GroupForm extends FormLayout {
 
 //        cbSpeciality.setReadOnly(true);
         cbSpeciality.setPlaceholder("Специальности на факультете");
-        cbSpeciality.setItemLabelGenerator(Speciality::getName);
+        cbSpeciality.setItemLabelGenerator(new ItemLabelGenerator<Speciality>() {
+            @Override
+            public String apply(Speciality speciality) {
+                return speciality.getSpecialityCode()+" "+speciality.getSpecialityName();
+            }
+        });
 //        List<Speciality> listSpeciality = service.getSpecialities(valueChangeEvent.getValue());
 //        cbSpeciality.setItems(listSpeciality);
         cbSpeciality.addValueChangeListener(valueChangeEvent -> {
@@ -110,7 +115,7 @@ public class GroupForm extends FormLayout {
 //        cbStudent.setReadOnly(true);
         cbStudent.setPlaceholder("Студенты группы");
 //        List<Student> listStudent = service.getStudents(cbFaculty.getValue(), cbSpeciality.getValue(), cbCource.getValue(), valueChangeEvent.getValue());
-        cbStudent.setItemLabelGenerator((ItemLabelGenerator<Student>) student -> student.getLastName() + " " + student.getFirstName() + " " + student.getMidlName());
+        cbStudent.setItemLabelGenerator((ItemLabelGenerator<Student>) student -> student.getLastName() + " " + student.getFirstName() + " " + student.getMiddleName());
 //        cbStudent.setItems(listStudent);
         addFormItem(cbStudent, "Студент");
 
@@ -120,10 +125,14 @@ public class GroupForm extends FormLayout {
 
     private void go() {
 //        String ref = String.format("window.location='schedule?group=%d&student=%d'",
-        String ref = String.format("schedule?group=%d&student=%d",
+//        String ref = String.format("schedule?group=%d&student=%d",
+        String ref = String.format("/student.html?group=%d&student=%d",
                 cbGroups.getValue().getId(),
                 cbStudent.getValue().getId()
         );
+        String servletPath = VaadinServlet.getCurrent().getServletContext().getContextPath(); // URL for this web app at runtime.
+        UI.getCurrent().getPage().open(servletPath+ref);
+
         // Redirect this page immediately
     /*    VaadinServletRequest currentRequest = (VaadinServletRequest) VaadinService.getCurrentRequest();
         HttpServletRequest httpServletRequest = currentRequest.getHttpServletRequest();
@@ -133,26 +142,24 @@ public class GroupForm extends FormLayout {
         httpServletRequest = com.vaadin.flow.server.VaadinServletRequest@1b49fcd8
                 getRequestURL = http://localhost:8080/
         currentRequest = localhost*/
-        getUI().get().getPage().open(/*currentRequest.getServerName() + */ref);
-        /*new Button("Logout", event -> {
-            // Redirect this page immediately
-            getPage().setLocation("/myapp/logout.html");
+//        getUI().get().getPage().open(/*currentRequest.getServerName() + */ref);
+//        UI.getCurrent().getPage().open(/*currentRequest.getServerName() + */ref);
 
-            // Close the session
-            getSession().close();
-        }));
 
-        // Notice quickly if other UIs are closed
-        setPollInterval(3000);
+//        https://vaadin.com/forum/thread/16959344/how-to-use-browserwindowopener-together-with-buttonrenderer-in-a-grid
+//        BrowserOpenerRenderer <MyBean> renderer = new BrowserOpenerRenderer<>(PopupUI.class, "Pop Up", cl -> {});
 
-        Button viewBtn = new Button("Click me", VaadinIcons.EYE);
-viewBtn.addClickListener(ev -> {
-  if (ev.isCtrlKey()) {
-      Page.getCurrent().open("http://www.example.com", "_blank", false);
-  } else {
-      Page.getCurrent().setLocation("http://www.example.com");
-  }
-});
-*/
+  /* https://stackoverflow.com/questions/51691041/generate-an-html-page-and-open-in-a-new-window-from-a-vaadin-8-app
+  Resource resource = new ExternalResource( servletPath + "/person.html" );  // Defining an external resource as a URL that is not really so external -- will call back into this same web app.
+        BrowserWindowOpener webPageOpener = new BrowserWindowOpener( resource );
+        webPageOpener.setWindowName( "Person ID: " + personUuid.getValue() );  // Set title of the new window to be opened.
+        String param = "person_id";
+        webPageOpener.setParameter( param , personUuid.getValue() );
+        String windowFeaturesString = String.format( "width=%d,height=%d,resizable" , Page.getCurrent().getBrowserWindowWidth() , Page.getCurrent().getBrowserWindowHeight() ); // Same size as original window.
+        webPageOpener.setFeatures( windowFeaturesString );  // Example: "width=800,height=600,resizable".
+        webPageOpener.extend( webPageButton ); // Connect opener with button.
+        System.out.println( "TRACE BrowserWindowOpener URL: " + webPageOpener.getUrl() );*/
+
+//        new BrowserWindowOpener(runtimeGeneratedResource())                 .extend(button);
     }
 }

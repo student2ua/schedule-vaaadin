@@ -2,14 +2,18 @@ package com.packagename.myapp.model;
 
 public class Teacher {
     private Integer id;
-    private String name;
+    private String lastName;
+    private String fistName;
+    private String middleName;
 
     public Teacher() {
     }
 
-    public Teacher(Integer id, String name) {
+    public Teacher(Integer id, String lastName, String fistName, String middleName) {
         this.id = id;
-        this.name = name;
+        this.lastName = lastName;
+        this.fistName = fistName;
+        this.middleName = middleName;
     }
 
     public Integer getId() {
@@ -20,11 +24,27 @@ public class Teacher {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFistName() {
+        return fistName;
+    }
+
+    public void setFistName(String fistName) {
+        this.fistName = fistName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 }

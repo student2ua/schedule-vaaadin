@@ -16,6 +16,7 @@
         <vaadin.version>14.1.17</vaadin.version>
 
         <drivers.downloader.phase>pre-integration-test</drivers.downloader.phase>
+        <httpclient.version>4.5.11</httpclient.version>
     </properties>
 
     <repositories>
@@ -104,6 +105,35 @@
             <artifactId>vaadin-testbench</artifactId>
             <scope>test</scope>
         </dependency>
+        
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient-cache</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>fluent-hc</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>18.0.0</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
@@ -120,6 +150,11 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.4.19.v20190610</version>
                 <configuration>
+                    <httpConnector>
+                        <port>80</port>
+                    </httpConnector>
+<!--                    <jetty.port>80</jetty.port>-->
+                    
                     <!-- If using IntelliJ IDEA with autocompilation, this
                     might cause lots of unnecessary compilations in the
                     background.-->

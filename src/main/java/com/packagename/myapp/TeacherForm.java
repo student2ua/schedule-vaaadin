@@ -1,18 +1,20 @@
 package com.packagename.myapp;
 
-import com.packagename.myapp.model.*;
-import com.packagename.myapp.service.ScheduleService;
+import com.packagename.myapp.model.Department;
+import com.packagename.myapp.model.Teacher;
+import com.packagename.myapp.service.IScheduleService;
+import com.packagename.myapp.service.RestScheduleService;
+import com.vaadin.flow.component.ItemLabelGenerator;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 public class TeacherForm extends FormLayout {
     private MainView mainView = null;
-    private ScheduleService service = null;
+    private IScheduleService service = null;
     private Button buttonSubmit = new Button("Расписание");
 //    FormLayout layoutWithFormItems = new FormLayout();
 
@@ -22,9 +24,11 @@ public class TeacherForm extends FormLayout {
     public TeacherForm(MainView mainView) {
         this.mainView = mainView;
 
-        service = ScheduleService.getInstance();
+//        service = ScheduleService.getInstance();
+        service = new RestScheduleService();
 //        cbDepartment.setReadOnly(true);
         cbDepartment.setRequired(true);
+//        cbDepartment.setHeightFull();
         List<Department> listFaculty = service.getDepartments();
         cbDepartment.setItemLabelGenerator(Department::getName);
         cbDepartment.setItems(listFaculty);
@@ -39,10 +43,9 @@ public class TeacherForm extends FormLayout {
             }
         });
         addFormItem(cbDepartment, "Кафедра");
-
         cbTeacher.setRequired(true);
         cbTeacher.setPlaceholder("Преподаватели на кафедре");
-        cbTeacher.setItemLabelGenerator(Teacher::getName);
+        cbTeacher.setItemLabelGenerator((ItemLabelGenerator<Teacher>) student -> student.getLastName() + " " + student.getFistName() + " " + student.getMiddleName());
         addFormItem(cbTeacher, "Преподаватель");
 
         buttonSubmit.addClickListener(buttonClickEvent -> go());
@@ -50,7 +53,8 @@ public class TeacherForm extends FormLayout {
     }
 
     private void go() {
-        String ref = String.format("schedule?employee=%d",
+//        String ref = String.format("schedule?employee=%d",
+        String ref = String.format("employee.html?employee=%d",
                 cbTeacher.getValue().getId());
         getUI().get().getPage().open(ref);
 

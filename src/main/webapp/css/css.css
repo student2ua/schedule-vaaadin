@@ -1,0 +1,241 @@
+#subject {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 1px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 3px;
+}
+
+#subject-small {
+    font-weight: bold;
+    margin-bottom: 1px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-top: 3px;
+}
+
+/*Subject for contains-multiple elements*/
+#element-table {
+    width: 100%;
+    border-spacing: 0px;
+    text-align: right
+}
+
+#lessonType-small {
+    color: gray;
+}
+
+#attestationType-small {
+    font-size: 80%;
+    color: red;
+    font-weight: bold;
+}
+
+#lessonType {
+    text-align: right;
+    color: gray;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 2px;
+}
+
+#attestationType {
+    text-align: right;
+    color: red;
+    font-weight: bold;
+    padding-right: 8px;
+}
+
+#teacher-img {
+    text-align: right;
+    color: gray;
+    padding-right: 2px;
+    width: 40px;
+}
+
+#room-img {
+    text-align: right;
+    color: gray;
+    padding-right: 3px;
+    width: 40px;
+}
+
+#group-img {
+    text-align: right;
+    color: gray;
+    width: 40px;
+    display: inline-block;
+}
+
+/** without inline-block image could be several rows height */
+#subgroup-img {
+    padding-right: 2px;
+}
+
+#group-text {
+    text-align: right;
+}
+
+/* todo: divide group-text and group-text-small */
+#group {
+    text-align: left;
+    color: gray
+}
+
+#subgroup {
+    text-align: left;
+}
+
+#subgroup-small {
+    text-align: right; /*color: gray*/
+}
+
+#teacher {
+    text-align: left;
+    white-space: nowrap;
+}
+
+#room {
+    text-align: left;
+    white-space: nowrap;
+}
+
+#room-small {
+    text-align: left;
+    white-space: nowrap;
+    padding-right: -21px;
+}
+
+#dayName {
+    font-family: Arial, Verdana, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: right;
+    white-space: nowrap
+}
+
+#empty {
+    height: 95px;
+}
+
+#date {
+    font-family: Arial, Verdana, sans-serif;
+    font-size: 11px;
+    color: gray;
+    text-align: right;
+    width: 40%;
+    white-space: nowrap;
+}
+
+#today {
+    font-family: Arial, Verdana, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: right;
+    color: red;
+}
+
+#cell {
+    border-width: 1px;
+    border-style: solid;
+    color: #000000;
+    border-color: #BED6F8;
+    vertical-align: top
+}
+
+/* also weekend-cell describes cells*/
+#weekend-cell {
+    border-width: 1px;
+    border-style: solid;
+    background-color: #F2F7FF;
+    border-color: #BED6F8;
+    vertical-align: top
+}
+
+#zeroth-cell {
+    border-width: 1px;
+    border-style: solid;
+    background-color: #F2F7FF;
+    border-color: #BED6F8;
+}
+
+/*0th pair, Same as weekend cell for now*/
+.header {
+    font-size: 11px;
+    font-family: Arial, Verdana, sans-serif;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #BED6F8;
+    background-color: #BED6F8;
+    background-position: top left;
+    background-repeat: repeat-x;
+    background-image: url(/schedule/img/headerBackground.gif);
+}
+
+#header-cell-table {
+    border: 0;
+    width: 100%;
+    cellpadding: 2;
+    cellspacing: 0;
+}
+
+#title {
+    font-family: Arial, Verdana, sans-serif;
+    font-size: 20px;
+    display: inline-block;
+    white-space: nowrap;
+    margin: 4px;
+}
+
+.pair {
+    text-align: center;
+    font-weight: bold;
+    border-width: 1px;
+    border-style: solid;
+    color: #000000;
+    background-color: #F2F7FF;
+    border-color: #BED6F8;
+    white-space: nowrap;
+}
+
+#pair-timing {
+    color: gray;
+    font-size: xx-small;
+}
+
+#pair0 {
+    border-width: 1px;
+    border-style: solid;
+    background-color: #F2F7FF;
+    border-color: #BED6F8;
+}
+
+#schedule-link {
+    text-decoration: none;
+    color: black;
+    border-bottom: 1px dotted;
+    white-space: nowrap;
+}
+
+#multiple-delim {
+    width: 65%;
+    margin-top: 3px;
+    margin-bottom: 0px;
+    border: 1px dashed #BED6F8;
+}
+
+table {
+    empty-cells: show;
+}
+
+body {
+    margin: 3px;
+}
+
+.im {
+    vertical-align: middle;
+}
+
+/*image*/

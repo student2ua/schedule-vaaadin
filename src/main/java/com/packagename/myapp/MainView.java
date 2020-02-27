@@ -1,29 +1,17 @@
 package com.packagename.myapp;
 
-import com.packagename.myapp.model.Faculty;
-import com.packagename.myapp.model.Speciality;
-import com.packagename.myapp.model.Student;
-import com.packagename.myapp.model.StudentGroups;
-import com.packagename.myapp.service.ScheduleService;
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.ItemLabelGenerator;
-import com.vaadin.flow.component.Key;
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.server.PWA;
+import com.vaadin.flow.server.*;
 
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -36,6 +24,7 @@ import java.util.stream.Stream;
 @PWA(name = "Project Base for Vaadin", shortName = "Project Base")
 @CssImport("./styles/shared-styles.css")
 @CssImport(value = "./styles/vaadin-text-field-styles.css", themeFor = "vaadin-text-field")
+//@Theme(value = Material.class, variant = Material.DARK)
 public class MainView extends VerticalLayout {
     public MainView() {
 
@@ -49,17 +38,19 @@ public class MainView extends VerticalLayout {
         teacherTab.add(teacherForm);
         teacherForm.setVisible(false);
 
-        Tab tab3 = new Tab("Tab three");
+       /* Tab tab3 = new Tab("Tab three");
         Div page3 = new Div();
         page3.setText("Page#3");
-        page3.setVisible(false);
+        page3.setVisible(false);*/
 
         Map<Tab, Component> tabsToPages = new HashMap<>();
         tabsToPages.put(groupTab, groupForm);
         tabsToPages.put(teacherTab, teacherForm);
-        tabsToPages.put(tab3, page3);
-        Tabs tabs = new Tabs(groupTab, teacherTab, tab3);
-        Div pages = new Div(groupForm, teacherForm, page3);
+//        tabsToPages.put(tab3, page3);
+        Tabs tabs = new Tabs(groupTab, teacherTab/*, tab3*/);
+        tabs.addThemeVariants(TabsVariant.MATERIAL_FIXED);
+
+        Div pages = new Div(groupForm, teacherForm/*, page3*/);
         Set<Component> pagesShown = Stream.of(groupForm)
                 .collect(Collectors.toSet());
 
@@ -94,5 +85,38 @@ public class MainView extends VerticalLayout {
 //        add(tabs,textField, button);
         add(tabs, pages);
 //        add(groupForm);
+
+        VaadinSession.getCurrent().addRequestHandler(
+                new RequestHandler() {
+                    @Override
+                    public boolean handleRequest(VaadinSession session,
+                                                 VaadinRequest request,
+                                                 VaadinResponse response)
+                            throws IOException {
+                        if ("/student.html".equals(request.getPathInfo())) {
+                            String groupString = request.getParameter("group");  // In real-work, validate the results here.
+                            String studentString = request.getParameter("student");  // In real-work, validate the results here.
+                            String weekString = request.getParameter("week");  // In real-work, validate the results here.
+                            // Build HTML.
+                            String html = ScheduleHtmlUtils.renderGroupSheduleHtml(groupString, studentString, weekString);
+                            // Send out the generated text as HTML, in UTF-8 character encoding.
+                            response.setContentType("text/html; charset=utf-8");
+                            response.getWriter().append(html);
+                            response.getWriter().flush();
+                            response.getWriter().close();
+                            return true; // We wrote a response
+                        } else if ("/employee.html".equals(request.getPathInfo())) {
+                            String employeeString = request.getParameter("employee");
+                            String weekString = request.getParameter("week");
+                            // Build HTML.
+                            String html = ScheduleHtmlUtils.renderEmployeeSheduleHtml(employeeString, weekString);
+                            // Send out the generated text as HTML, in UTF-8 character encoding.
+                            response.setContentType("text/html; charset=utf-8");
+                            response.getWriter().append(html);
+                            return true;
+                        }
+                        return false; // No response was written
+                    }
+                });
     }
 }

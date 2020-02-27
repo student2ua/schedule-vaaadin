@@ -3,13 +3,15 @@ package com.packagename.myapp.model;
 public class Department {
     private Integer id;
     private String name;
+    private String code;
 
     public Department() {
     }
 
-    public Department(Integer id, String name) {
+    public Department(Integer id, String name, String code) {
         this.id = id;
         this.name = name;
+        this.code = code;
     }
 
     public Integer getId() {
@@ -26,5 +28,13 @@ public class Department {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

@@ -2,13 +2,15 @@ package com.packagename.myapp.model;
 
 public class Student {
     private Integer id;
-    private String lastName,firstName,midlName;
+    private String lastName;
+    private String firstName;
+    private String middleName;
 
     public Student(Integer id, String lastName, String firstName, String midlName) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
-        this.midlName = midlName;
+        this.middleName = midlName;
     }
 
     public Student() {
@@ -38,11 +40,11 @@ public class Student {
         this.firstName = firstName;
     }
 
-    public String getMidlName() {
-        return midlName;
+    public String getMiddleName() {
+        return middleName;
     }
 
-    public void setMidlName(String midlName) {
-        this.midlName = midlName;
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 }
