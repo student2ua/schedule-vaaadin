@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 @CssImport("./styles/shared-styles.css")
 @CssImport(value = "./styles/vaadin-text-field-styles.css", themeFor = "vaadin-text-field")
 //@Theme(value = Material.class, variant = Material.DARK)
-public class MainView extends VerticalLayout {
+public class MainView extends VerticalLayout implements PageConfigurator {
     public MainView() {
 
         Tab groupTab = new Tab("Расписание на группу");
@@ -118,5 +118,10 @@ public class MainView extends VerticalLayout {
                         return false; // No response was written
                     }
                 });
+    }
+
+    @Override
+    public void configurePage(InitialPageSettings settings) {
+        settings.addLink("shortcut icon", "icons/favicon.ico");
     }
 }
