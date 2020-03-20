@@ -14,3 +14,10 @@ If you want to run your app locally in the production mode, run `mvn jetty:run -
 
 For a full Vaadin application example, there are more choices available also from [vaadin.com/start](https://vaadin.com/start) page.
 
+
++
+[icon`s]
+https://vaadin.com/docs/v14/flow/pwa/tutorial-pwa-icons.html
+
+[jetty-runner]
+java -jar jetty-runner-9.4.26.jar --host 192.168.2.222 --port 80 --out log\yyyy_mm_dd-output.log --log log\yyyy_mm_dd-requests.log my.war
