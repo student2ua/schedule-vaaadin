@@ -28,12 +28,12 @@ import java.util.stream.Stream;
 public class MainView extends VerticalLayout implements PageConfigurator {
     public MainView() {
 
-        Tab groupTab = new Tab("Расписание на группу");
+        Tab groupTab = new Tab("Розклад на групу");
         GroupForm groupForm = new GroupForm(this);
         groupTab.add(groupForm);
 
 
-        Tab teacherTab = new Tab("Расписание на Преподавателя");
+        Tab teacherTab = new Tab("Розклад на Викладача");
         TeacherForm teacherForm = new TeacherForm(this);
         teacherTab.add(teacherForm);
         teacherForm.setVisible(false);

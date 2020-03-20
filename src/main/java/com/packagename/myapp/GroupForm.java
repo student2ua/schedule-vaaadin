@@ -16,10 +16,10 @@ import com.vaadin.flow.server.VaadinServlet;
 import java.util.Collections;
 import java.util.List;
 
-public class GroupForm extends FormLayout {
-    private MainView mainView = null;
-    private IScheduleService service = null;
-    private Button buttonSubmit = new Button("Расписание");
+class GroupForm extends FormLayout {
+    private MainView mainView;
+    private IScheduleService service;
+    private Button buttonSubmit = new Button("Розклад");
 //    FormLayout layoutWithFormItems = new FormLayout();
 
     private ComboBox<Faculty> cbFaculty = new ComboBox<>();
@@ -28,16 +28,19 @@ public class GroupForm extends FormLayout {
     private ComboBox<StudentGroups> cbGroups = new ComboBox<>();
     private ComboBox<Student> cbStudent = new ComboBox<>();
 
-    public GroupForm(MainView mainView) {
+    GroupForm(MainView mainView) {
         this.mainView = mainView;
+        setResponsiveSteps(new FormLayout.ResponsiveStep("100%", 1, ResponsiveStep.LabelsPosition.ASIDE));
+
 //        service = ScheduleService.getInstance();
         service = new RestScheduleService();
 //        cbFaculty.setReadOnly(true);
         cbFaculty.setRequired(true);
+        cbFaculty.setWidthFull();
         List<Faculty> listFaculty = service.getFaculties();
         cbFaculty.setItemLabelGenerator(Faculty::getFacultyName);
         cbFaculty.setItems(listFaculty);
-        addFormItem(cbFaculty, "Факультет");
+        addFormItem(cbFaculty, "1.Факультет");
         cbFaculty.addValueChangeListener(valueChangeEvent -> {
             if (valueChangeEvent.getValue() == null) {
                 cbSpeciality.setEnabled(false);
@@ -50,15 +53,9 @@ public class GroupForm extends FormLayout {
         });
 
 //        cbSpeciality.setReadOnly(true);
-        cbSpeciality.setPlaceholder("Специальности на факультете");
-        cbSpeciality.setItemLabelGenerator(new ItemLabelGenerator<Speciality>() {
-            @Override
-            public String apply(Speciality speciality) {
-                return speciality.getSpecialityCode()+" "+speciality.getSpecialityName();
-            }
-        });
-//        List<Speciality> listSpeciality = service.getSpecialities(valueChangeEvent.getValue());
-//        cbSpeciality.setItems(listSpeciality);
+        cbSpeciality.setWidthFull();
+        cbSpeciality.setPlaceholder("Спеціальності на факультеті");
+        cbSpeciality.setItemLabelGenerator((ItemLabelGenerator<Speciality>) speciality -> speciality.getSpecialityCode()+" "+speciality.getSpecialityName());
         cbSpeciality.addValueChangeListener(valueChangeEvent -> {
             if (valueChangeEvent.getValue() == null) {
                 cbCource.setEnabled(false);
@@ -69,11 +66,10 @@ public class GroupForm extends FormLayout {
                     cbCource.setItems(service.getCourses(cbFaculty.getValue(), valueChangeEvent.getValue()));
             }
         });
-        addFormItem(cbSpeciality, "Специальность");
+        addFormItem(cbSpeciality, "2.Спеціальність");
 
-//        cbCource.setReadOnly(true);
-//        cbCource.setItems(service.getCourses(valueChangeEvent.getValue()));
-        cbCource.setPlaceholder("Доступные курсы");
+        cbCource.setWidthFull();
+        cbCource.setPlaceholder("Доступні курси");
         cbCource.addValueChangeListener(valueChangeEvent -> {
             if (valueChangeEvent.getValue() == null) {
                 cbGroups.setEnabled(false);
@@ -88,13 +84,11 @@ public class GroupForm extends FormLayout {
                                     valueChangeEvent.getValue()));
             }
         });
-        addFormItem(cbCource, "Курс");
+        addFormItem(cbCource, "3.Курс");
 
-//        cbGroups.setReadOnly(true);
-        cbGroups.setPlaceholder("Доступные группы");
-//        List<StudentGroups> listGroups = service.getStudentGroups(valueChangeEvent.getValue());
+        cbGroups.setWidthFull();
+        cbGroups.setPlaceholder("Доступні групи");
         cbGroups.setItemLabelGenerator(StudentGroups::getName);
-//        cbGroups.setItems(listGroups);
         cbGroups.addValueChangeListener(valueChangeEvent -> {
             if (valueChangeEvent.getValue() == null) {
                 cbStudent.setEnabled(false);
@@ -110,14 +104,12 @@ public class GroupForm extends FormLayout {
                                     valueChangeEvent.getValue()));
             }
         });
-        addFormItem(cbGroups, "Группа");
+        addFormItem(cbGroups, "4.Група");
 
-//        cbStudent.setReadOnly(true);
-        cbStudent.setPlaceholder("Студенты группы");
-//        List<Student> listStudent = service.getStudents(cbFaculty.getValue(), cbSpeciality.getValue(), cbCource.getValue(), valueChangeEvent.getValue());
+        cbStudent.setWidthFull();
+        cbStudent.setPlaceholder("Студенти групи");
         cbStudent.setItemLabelGenerator((ItemLabelGenerator<Student>) student -> student.getLastName() + " " + student.getFirstName() + " " + student.getMiddleName());
-//        cbStudent.setItems(listStudent);
-        addFormItem(cbStudent, "Студент");
+        addFormItem(cbStudent, "5.Студент");
 
         buttonSubmit.addClickListener(buttonClickEvent -> go());
         add(buttonSubmit);
