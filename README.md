@@ -1,3 +1,5 @@
+![Java CI with Maven](https://github.com/student2ua/schedule-vaaadin/workflows/Java%20CI%20with%20Maven/badge.svg)
+
 # Skeleton Starter for Vaadin
 
 This project can be used as a starting point to create your own Vaadin application.
