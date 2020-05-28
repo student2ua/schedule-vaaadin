@@ -1,3 +1,5 @@
+![Java CI with Maven](https://github.com/student2ua/schedule-vaaadin/workflows/Java%20CI%20with%20Maven/badge.svg)
+
 # Skeleton Starter for Vaadin
 
 This project can be used as a starting point to create your own Vaadin application.
@@ -20,4 +22,4 @@ For a full Vaadin application example, there are more choices available also fro
 https://vaadin.com/docs/v14/flow/pwa/tutorial-pwa-icons.html
 
 [jetty-runner]
-java -jar jetty-runner-9.4.26.jar --host 192.168.2.222 --port 80 --out log\yyyy_mm_dd-output.log --log log\yyyy_mm_dd-requests.log my.war
+java -jar jetty-runner-9.4.26.jar --host 192.168.XXX.XXX --port 80 --out log\yyyy_mm_dd-output.log --log log\yyyy_mm_dd-requests.log my.war
