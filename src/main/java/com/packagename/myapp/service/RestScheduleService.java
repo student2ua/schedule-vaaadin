@@ -77,7 +77,9 @@ public class RestScheduleService implements IScheduleService {
             if (response != null) {
                 Set<Integer> courses = new HashSet<>();
                 for (StudentGroups groups : response) {
-                    if (groups.getCourse()<=4)
+                    if (groups.getCourse() <= 4 ||
+                            (faculty.getId() == 195 && groups.getCourse() <= 5)   //zao 5 year
+                    )
                     courses.add(groups.getCourse());
                 }
                 rez.addAll(courses);
