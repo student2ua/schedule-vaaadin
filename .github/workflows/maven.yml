@@ -27,11 +27,7 @@ jobs:
         with:
           name: Package
           path: staging
-      - name: Configure Git user
-          run: |
-            git config user.email "actions@github.com"
-            git config user.name "GitHub Actions"
-      - name: Publish JAR
-          run: ./mvnw -B release:prepare release:perform
+      - name: Publish to GitHub Packages
+          run: mvn -B deploy --file pom.xml
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
