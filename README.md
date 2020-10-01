@@ -16,7 +16,10 @@ If you want to run your app locally in the production mode, run `mvn jetty:run -
 
 For a full Vaadin application example, there are more choices available also from [vaadin.com/start](https://vaadin.com/start) page.
 
++
+[Supported clients and formats](https://help.github.com/en/packages/publishing-and-managing-packages/about-github-packages#supported-clients-and-formats)
 
+[GitHub Actions and Maven releases](https://blog.frankel.ch/github-actions-maven-releases/)
 +
 [icon`s]
 https://vaadin.com/docs/v14/flow/pwa/tutorial-pwa-icons.html
