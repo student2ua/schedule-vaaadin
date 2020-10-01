@@ -20,14 +20,14 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml
-      - run: mkdir staging && cp target/*.war staging
-      - uses: actions/upload-artifact@v1
-        with:
-          name: Package
-          path: staging
+#      - name: Build with Maven
+#        run: mvn -B package --file pom.xml
+#      - run: mkdir staging && cp target/*.war staging
+#      - uses: actions/upload-artifact@v1
+#       with:
+#          name: Package
+#          path: staging
       - name: Publish to GitHub Packages
-          run: mvn -B deploy --file pom.xml
-          env:
+        run: mvn -B deploy --file pom.xml
+        env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
