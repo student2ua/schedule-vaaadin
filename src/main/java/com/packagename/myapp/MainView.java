@@ -11,6 +11,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.*;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * The main view contains a button and a click listener.
+ * The main view contains a tabs.
  */
 @Route("")
 @PWA(name = "Project Base for Vaadin", shortName = "Project Base")
@@ -93,27 +94,40 @@ public class MainView extends VerticalLayout implements PageConfigurator {
                                                  VaadinRequest request,
                                                  VaadinResponse response)
                             throws IOException {
-                        if ("/student.html".equals(request.getPathInfo())) {
-                            String groupString = request.getParameter("group");  // In real-work, validate the results here.
-                            String studentString = request.getParameter("student");  // In real-work, validate the results here.
-                            String weekString = request.getParameter("week");  // In real-work, validate the results here.
-                            // Build HTML.
-                            String html = ScheduleHtmlUtils.renderGroupSheduleHtml(groupString, studentString, weekString);
-                            // Send out the generated text as HTML, in UTF-8 character encoding.
-                            response.setContentType("text/html; charset=utf-8");
-                            response.getWriter().append(html);
-                            response.getWriter().flush();
-                            response.getWriter().close();
-                            return true; // We wrote a response
-                        } else if ("/employee.html".equals(request.getPathInfo())) {
-                            String employeeString = request.getParameter("employee");
-                            String weekString = request.getParameter("week");
-                            // Build HTML.
-                            String html = ScheduleHtmlUtils.renderEmployeeSheduleHtml(employeeString, weekString);
-                            // Send out the generated text as HTML, in UTF-8 character encoding.
-                            response.setContentType("text/html; charset=utf-8");
-                            response.getWriter().append(html);
-                            return true;
+                        switch (request.getPathInfo()) {
+                            case "/student.html": {
+                                String groupString = request.getParameter("group");  // In real-work, validate the results here.
+
+                                String studentString = request.getParameter("student");  // In real-work, validate the results here.
+                                if (groupString == null || groupString.isEmpty() || !groupString.matches("[0-9]+") ||
+                                        studentString == null || studentString.isEmpty() || !studentString.matches("[0-9]+")) {
+//                                    ErrorViewShower.showError() ;
+                                    VaadinSession.getCurrent().getErrorHandler().error(new ErrorEvent(new ParseException("помилка у данних", 0)));
+                                }
+                                String weekString = request.getParameter("week");  // In real-work, validate the results here.
+
+                                // Build HTML.
+                                String html = ScheduleHtmlUtils.renderGroupSheduleHtml(groupString, studentString, weekString);
+                                // Send out the generated text as HTML, in UTF-8 character encoding.
+                                response.setContentType("text/html; charset=utf-8");
+                                response.getWriter().append(html);
+                                response.getWriter().flush();
+                                response.getWriter().close();
+                                return true; // We wrote a response
+
+                            }
+                            case "/employee.html": {
+                                String employeeString = request.getParameter("employee");
+                                String weekString = request.getParameter("week");
+                                // Build HTML.
+                                String html = ScheduleHtmlUtils.renderEmployeeSheduleHtml(employeeString, weekString);
+                                // Send out the generated text as HTML, in UTF-8 character encoding.
+                                response.setContentType("text/html; charset=utf-8");
+                                response.getWriter().append(html);
+                                response.getWriter().flush();
+                                response.getWriter().close();
+                                return true;
+                            }
                         }
                         return false; // No response was written
                     }

@@ -28,7 +28,12 @@ class ScheduleHtmlUtils {
         if (weekString != null && !weekString.isEmpty() && weekString.matches("[0-9]+")) {
             week = Integer.parseInt(weekString);
         }
-        final String studentSchedule = service.getStudentSchedule(Integer.parseInt(stringGroup), Integer.parseInt(studentString), week);
+        Integer studId =null;
+        if (studentString != null && !studentString.isEmpty() && studentString.matches("[0-9]+")) {
+            studId = Integer.parseInt(studentString);;
+        }
+
+        final String studentSchedule = service.getStudentSchedule(Integer.parseInt(stringGroup), studId, week);
         String ins = "Error";
         Logger.getLogger(ScheduleHtmlUtils.class.getName()).info(studentSchedule);
         try {
@@ -54,7 +59,7 @@ class ScheduleHtmlUtils {
                 "    <tr>\n" +
                 "        <td width=\"10%\" align=\"left\" nowrap=\"nowrap\">\n" +
                 "            <a title=\"Перейти к страничке выбора группы/преподавателя\"\n" +
-                "               href=\"selection.jsf\">&larr; Главная страница</a>&nbsp;&nbsp;&nbsp;\n" +
+                "               href=\"\\\">&larr; Главная страница</a>&nbsp;&nbsp;&nbsp;\n" +
                 "        </td>\n" +
                 "        <td width=\"80%\" align=\"center\" nowrap=\"nowrap\">\n " +
                 (week != null ? getNavlink(week, "/student.html?group=" + stringGroup + "&student=" + studentString + "&week=%d") : "") +
@@ -111,7 +116,7 @@ class ScheduleHtmlUtils {
     }
 
     private static String getNavlink(@NotNull Integer week, @NotNull String linkTmp) {
-        StringBuffer rez = new StringBuffer();
+        StringBuilder rez = new StringBuilder();
         Integer forwardweekInt = week + 1;
         Integer backWeekInt = week - 1;
         if (backWeekInt < 0) backWeekInt = 0;
