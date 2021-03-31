@@ -27,7 +27,11 @@ jobs:
 #       with:
 #          name: Package
 #          path: staging
-      - name: Publish to GitHub Packages
-        run: mvn -B deploy --file pom.xml
+#      - name: Publish to GitHub Packages
+#        run: mvn -B deploy --file pom.xml
+#        env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish JAR
+        run: ./mvnw -B release:prepare release:perform
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
