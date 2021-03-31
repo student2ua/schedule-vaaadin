@@ -32,6 +32,6 @@ jobs:
 #        env:
 #           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish JAR
-        run: mvn -B release:prepare release:perform
+        run: mvn -B release:prepare release:perform -Pproduction --file pom.xml
         env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
