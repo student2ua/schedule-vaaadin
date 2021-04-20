@@ -30,8 +30,8 @@ class GroupForm extends FormLayout {
 
     GroupForm(MainView mainView) {
         this.mainView = mainView;
-        setResponsiveSteps(new FormLayout.ResponsiveStep("100%", 1, ResponsiveStep.LabelsPosition.ASIDE));
-
+//        setResponsiveSteps(new FormLayout.ResponsiveStep("100%", 1, ResponsiveStep.LabelsPosition.ASIDE));
+        setResponsiveSteps(new FormLayout.ResponsiveStep("25em", 1));
 //        service = ScheduleService.getInstance();
         service = new RestScheduleService();
 //        cbFaculty.setReadOnly(true);

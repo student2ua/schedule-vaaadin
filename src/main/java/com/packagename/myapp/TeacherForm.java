@@ -25,9 +25,10 @@ class TeacherForm extends FormLayout {
 
     TeacherForm(MainView mainView) {
         this.mainView = mainView;
-
+       setResponsiveSteps(new FormLayout.ResponsiveStep("25em", 1));
 //        service = ScheduleService.getInstance();
         service = new RestScheduleService();
+
 //        cbDepartment.setReadOnly(true);
         cbDepartment.setRequired(true);
         cbDepartment.setWidthFull();
