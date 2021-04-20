@@ -3,7 +3,7 @@
     <groupId>com.ua.ecwo</groupId>
     <artifactId>shedule-vaadin</artifactId>
     <name>My Starter Project</name>
-    <version>20.9.7</version>
+    <version>21.4.20</version>
     <packaging>war</packaging>
 
     <properties>
