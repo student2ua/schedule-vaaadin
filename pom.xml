@@ -16,7 +16,7 @@
         <vaadin.version>14.4.10</vaadin.version>
 
         <drivers.downloader.phase>pre-integration-test</drivers.downloader.phase>
-        <httpclient.version>4.5.11</httpclient.version>
+        <httpclient.version>4.5.13</httpclient.version>
         <git.repository>student2ua/schedule-vaaadin</git.repository>
         <project.scm.id>github</project.scm.id>
         
